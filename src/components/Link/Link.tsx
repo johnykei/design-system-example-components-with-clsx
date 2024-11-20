@@ -1,3 +1,4 @@
+import { clsx } from 'clsx';
 import type { ComponentProps } from 'react';
 import { Slot } from '../Slot';
 
@@ -8,13 +9,13 @@ export const linkFocusStyle =
   'focus-visible:rounded focus-visible:outline focus-visible:outline-4 focus-visible:outline-black focus-visible:outline-offset-[calc(2/16*1rem)] focus-visible:bg-yellow-300 focus-visible:text-blue-1000 focus-visible:ring-[calc(2/16*1rem)] focus-visible:ring-yellow-300';
 export const linkActiveStyle = 'active:text-orange-700 active:decoration-1';
 
-export const linkStyle = `
-  ${linkDefaultStyle}
-  ${linkVisitedStyle}
-  ${linkHoverStyle}
-  ${linkFocusStyle}
-  ${linkActiveStyle}
-`;
+export const linkStyle = [
+  linkDefaultStyle,
+  linkVisitedStyle,
+  linkHoverStyle,
+  linkFocusStyle,
+  linkActiveStyle,
+];
 
 export type LinkProps = {
   className?: string;
@@ -26,14 +27,14 @@ export const Link = (props: LinkProps) => {
 
   if (asChild) {
     return (
-      <Slot className={`${linkStyle} ${className ?? ''}`} {...rest}>
+      <Slot className={clsx(linkStyle, className)} {...rest}>
         {children}
       </Slot>
     );
   }
 
   return (
-    <a className={`${linkStyle} ${className ?? ''}`} {...rest}>
+    <a className={clsx(linkStyle, className)} {...rest}>
       {children}
 
       {props.target === '_blank' && <LinkExternalLinkIcon {...icon} />}
