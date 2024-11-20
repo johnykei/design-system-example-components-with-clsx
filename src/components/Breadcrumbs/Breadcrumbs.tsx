@@ -1,3 +1,4 @@
+import { clsx } from 'clsx';
 import type { ComponentProps } from 'react';
 import { Slot } from '../Slot';
 
@@ -15,7 +16,7 @@ export const BreadcrumbItem = ({
     return (
       <li
         aria-current='page'
-        className={`inline break-words text-oln-16N-100 ${className ?? ''}`}
+        className={clsx('inline break-words text-oln-16N-100', className)}
         {...rest}
       >
         {children}
@@ -23,7 +24,7 @@ export const BreadcrumbItem = ({
     );
   }
   return (
-    <li className={`inline break-words ${className ?? ''}`}>
+    <li className={clsx('inline break-words', className)}>
       {children}
       <svg
         aria-hidden={true}
@@ -42,12 +43,12 @@ export const BreadcrumbItem = ({
   );
 };
 
-export const breadcrumbLinkStyle = `
-  text-blue-1000 text-oln-16N-100 underline underline-offset-[calc(3/16*1rem)]
-  hover:text-blue-900 hover:decoration-[calc(3/16*1rem)]
-  active:text-orange-700 active:decoration-1
-  focus-visible:rounded focus-visible:outline focus-visible:outline-4 focus-visible:outline-black focus-visible:outline-offset-[calc(2/16*1rem)] focus-visible:bg-yellow-300 focus-visible:text-blue-1000 focus-visible:ring-[calc(2/16*1rem)] focus-visible:ring-yellow-300
-`;
+export const breadcrumbLinkStyle = [
+  'text-blue-1000 text-oln-16N-100 underline underline-offset-[calc(3/16*1rem)]',
+  'hover:text-blue-900 hover:decoration-[calc(3/16*1rem)]',
+  'active:text-orange-700 active:decoration-1',
+  'focus-visible:rounded focus-visible:outline focus-visible:outline-4 focus-visible:outline-black focus-visible:outline-offset-[calc(2/16*1rem)] focus-visible:bg-yellow-300 focus-visible:text-blue-1000 focus-visible:ring-[calc(2/16*1rem)] focus-visible:ring-yellow-300',
+];
 
 export type BreadcrumbLinkProps = {
   className?: string;
@@ -58,14 +59,14 @@ export const BreadcrumbLink = (props: BreadcrumbLinkProps) => {
 
   if (asChild) {
     return (
-      <Slot className={`${breadcrumbLinkStyle} ${className ?? ''}`} {...rest}>
+      <Slot className={clsx(breadcrumbLinkStyle, className)} {...rest}>
         {children}
       </Slot>
     );
   }
 
   return (
-    <a className={`${breadcrumbLinkStyle} ${className ?? ''}`} {...rest}>
+    <a className={clsx(breadcrumbLinkStyle, className)} {...rest}>
       {children}
     </a>
   );
@@ -77,7 +78,7 @@ export const BreadcrumbList = (props: BreadcrumbListProps) => {
   const { children, className, ...rest } = props;
 
   return (
-    <ol className={`inline ${className ?? ''}`} {...rest}>
+    <ol className={clsx('inline', className)} {...rest}>
       {children}
     </ol>
   );
@@ -89,7 +90,7 @@ export const BreadcrumbsLabel = (props: BreadcrumbsLabelProps) => {
   const { children, className, ...rest } = props;
 
   return (
-    <span className={`${className ?? ''}`} {...rest}>
+    <span className={clsx(className)} {...rest}>
       {children}
     </span>
   );
@@ -101,7 +102,7 @@ export const Breadcrumbs = (props: BreadcrumbsProps) => {
   const { children, className, ...rest } = props;
 
   return (
-    <nav className={`${className ?? ''}`} {...rest}>
+    <nav className={clsx(className)} {...rest}>
       {children}
     </nav>
   );
