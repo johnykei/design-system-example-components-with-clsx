@@ -1,56 +1,36 @@
+import { clsx } from 'clsx';
 import { type ComponentProps, forwardRef } from 'react';
 import { Slot } from '..';
 
 export type ButtonVariant = 'solid-fill' | 'outline' | 'text';
 export type ButtonSize = 'lg' | 'md' | 'sm' | 'xs';
 
-export const buttonBaseStyle = `
-  underline-offset-[calc(3/16*1rem)]
-  focus-visible:outline focus-visible:outline-4 focus-visible:outline-black focus-visible:outline-offset-[calc(2/16*1rem)] focus-visible:ring-[calc(2/16*1rem)] focus-visible:ring-yellow-300
-  aria-disabled:pointer-events-none aria-disabled:forced-colors:border-[GrayText] aria-disabled:forced-colors:text-[GrayText]
-`;
+export const buttonBaseStyle = [
+  'underline-offset-[calc(3/16*1rem)]',
+  'focus-visible:outline focus-visible:outline-4 focus-visible:outline-black focus-visible:outline-offset-[calc(2/16*1rem)] focus-visible:ring-[calc(2/16*1rem)] focus-visible:ring-yellow-300',
+  'aria-disabled:pointer-events-none aria-disabled:forced-colors:border-[GrayText] aria-disabled:forced-colors:text-[GrayText]',
+];
 
-export const buttonVariantStyle: { [key in ButtonVariant]: string } = {
-  'solid-fill': `
-    border-4
-    border-double
-    border-transparent
-    bg-blue-900
-    text-white
-    hover:bg-blue-1000
-    hover:underline
-    active:bg-blue-1200
-    active:underline
-    aria-disabled:bg-solid-gray-300
-    aria-disabled:text-solid-gray-50
-  `,
-  outline: `
-    border
-    border-current
-    bg-white
-    text-blue-900
-    hover:bg-blue-200
-    hover:text-blue-1000
-    hover:underline
-    active:bg-blue-300
-    active:text-blue-1200
-    active:underline
-    aria-disabled:bg-white
-    aria-disabled:text-solid-gray-300
-  `,
-  text: `
-    text-blue-900
-    underline
-    hover:bg-blue-50
-    hover:text-blue-1000
-    hover:decoration-[calc(3/16*1rem)]
-    active:bg-blue-100
-    active:text-blue-1200
-    focus-visible:bg-yellow-300
-    aria-disabled:bg-transparent
-    aria-disabled:focus-visible:bg-yellow-300
-    aria-disabled:text-solid-gray-300
-  `,
+export const buttonVariantStyle: { [key in ButtonVariant]: string[] } = {
+  'solid-fill': [
+    'border-4 border-double border-transparent bg-blue-900 text-white',
+    'hover:bg-blue-1000 hover:underline',
+    'active:bg-blue-1200 active:underline',
+    'aria-disabled:bg-solid-gray-300 aria-disabled:text-solid-gray-50',
+  ],
+  outline: [
+    'border border-current bg-white text-blue-900',
+    'hover:bg-blue-200 hover:text-blue-1000 hover:underline',
+    'active:bg-blue-300 active:text-blue-1200 active:underline',
+    'aria-disabled:bg-white aria-disabled:text-solid-gray-300',
+  ],
+  text: [
+    'text-blue-900 underline',
+    'hover:bg-blue-50 hover:text-blue-1000 hover:decoration-[calc(3/16*1rem)]',
+    'active:bg-blue-100 active:text-blue-1200',
+    'focus-visible:bg-yellow-300',
+    'aria-disabled:bg-transparent aria-disabled:focus-visible:bg-yellow-300 aria-disabled:text-solid-gray-300',
+  ],
 };
 
 export const buttonSizeStyle: { [key in ButtonSize]: string } = {
@@ -72,9 +52,12 @@ export type ButtonProps = {
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
   const { asChild, children, className, variant, size, ...rest } = props;
 
-  const classNames = `${buttonBaseStyle} ${buttonSizeStyle[size]} ${
-    variant ? buttonVariantStyle[variant] : ''
-  } ${className ?? ''}`;
+  const classNames = clsx(
+    buttonBaseStyle,
+    buttonSizeStyle[size],
+    variant ? buttonVariantStyle[variant] : '',
+    className,
+  );
 
   if (asChild) {
     return (
