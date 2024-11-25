@@ -1,3 +1,4 @@
+import { clsx } from 'clsx';
 import { type ComponentProps, forwardRef } from 'react';
 
 export type SelectBlockSize = 'lg' | 'md' | 'sm';
@@ -32,13 +33,13 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>((props, ref) =>
   return (
     <div className={`relative min-w-80 max-w-full ${SelectBlockSizeStyle[blockSize]}`}>
       <select
-        className={`
-          size-full appearance-none border rounded-lg bg-white px-4 py-[calc(11/16*1rem)] text-oln-16N-100 text-solid-gray-800
-          ${isError ? 'border-error-1' : 'border-solid-gray-900'}
-          focus:outline focus:outline-4 focus:outline-black focus:outline-offset-[calc(2/16*1rem)] focus:ring-[calc(2/16*1rem)] focus:ring-yellow-300
-          aria-disabled:border-solid-gray-300 aria-disabled:bg-solid-gray-50 aria-disabled:text-solid-gray-420 aria-disabled:pointer-events-none aria-disabled:forced-colors:text-[GrayText] aria-disabled:forced-colors:border-[GrayText]
-          ${className ?? ''}
-        `}
+        className={clsx(
+          'size-full appearance-none border rounded-lg bg-white px-4 py-[calc(11/16*1rem)] text-oln-16N-100 text-solid-gray-800',
+          isError ? 'border-error-1' : 'border-solid-gray-900',
+          'focus:outline focus:outline-4 focus:outline-black focus:outline-offset-[calc(2/16*1rem)] focus:ring-[calc(2/16*1rem)] focus:ring-yellow-300',
+          'aria-disabled:border-solid-gray-300 aria-disabled:bg-solid-gray-50 aria-disabled:text-solid-gray-420 aria-disabled:pointer-events-none aria-disabled:forced-colors:text-[GrayText] aria-disabled:forced-colors:border-[GrayText]',
+          className,
+        )}
         onMouseDown={props['aria-disabled'] ? handleDisabledMouseDown : onMouseDown}
         onKeyDown={props['aria-disabled'] ? handleDisabledKeyDown : onKeyDown}
         ref={ref}
@@ -48,10 +49,10 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>((props, ref) =>
       </select>
       <svg
         aria-hidden={true}
-        className={`
-          pointer-events-none absolute right-4 top-1/2 -translate-y-1/2
-          ${props['aria-disabled'] ? 'text-solid-gray-420' : 'text-solid-gray-900'}
-        `}
+        className={clsx(
+          'pointer-events-none absolute right-4 top-1/2 -translate-y-1/2',
+          props['aria-disabled'] ? 'text-solid-gray-420' : 'text-solid-gray-900',
+        )}
         fill='none'
         height='16'
         viewBox='0 0 16 16'
